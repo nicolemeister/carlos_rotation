@@ -80,8 +80,6 @@ def evaluate(fn, dev, metric=EM):
     pd.options.display.max_colwidth = None
     display(df.style.set_table_styles([{'selector': 'th', 'props': [('text-align', 'left')]}, {'selector': 'td', 'props': [('text-align', 'left')]}]))
 
-
-
     data = []
     # substring match 
     for example in tqdm.tqdm(dev):
@@ -94,6 +92,7 @@ def evaluate(fn, dev, metric=EM):
 
         d['prediction'] = pred
         d['correct'] = metric(pred, example.answer)
+        d['EM_correct'] = EM(pred, example.answer)
         data.append(d)
 
     df = pd.DataFrame(data)
@@ -101,6 +100,14 @@ def evaluate(fn, dev, metric=EM):
     substringmatch_percentage = round(100.0 * df['correct'].sum() / len(dev), 1)
     print(f"Answered {df['correct'].sum()} / {len(dev)} ({substringmatch_percentage}%) correctly.")
     df['correct'] = df['correct'].apply(lambda x: '✔️' if x else '❌')
+
+    pd.options.display.max_colwidth = None
+    display(df.style.set_table_styles([{'selector': 'th', 'props': [('text-align', 'left')]}, {'selector': 'td', 'props': [('text-align', 'left')]}]))
+
+
+    EM_percentage = round(100.0 * df['EM_correct'].sum() / len(dev), 1)
+    print(f"Answered {df['EM_correct'].sum()} / {len(dev)} ({substringmatch_percentage}%) correctly.")
+    df['EM_correct'] = df['EM_correct'].apply(lambda x: '✔️' if x else '❌')
 
     pd.options.display.max_colwidth = None
     display(df.style.set_table_styles([{'selector': 'th', 'props': [('text-align', 'left')]}, {'selector': 'td', 'props': [('text-align', 'left')]}]))
