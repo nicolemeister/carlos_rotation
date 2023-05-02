@@ -15,13 +15,13 @@ import requests
 
 
 
-query = ""
-bing_api_key = '5fd5ca2ea3b543078fecffce0b5a9b7e'
-openai_api_key = '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'
-top_k_search_results=5
-answer(query, openai_api_key, bing_api_key, top_k_search_results)
+# query = ""
+# bing_api_key = '5fd5ca2ea3b543078fecffce0b5a9b7e'
+# openai_api_key = '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'
+# top_k_search_results=5
+# answer(query, openai_api_key, bing_api_key, top_k_search_results)
 
-
+'''
 def answer(query, openai_api_key, bing_api_key, top_k_search_results):
     openai.api_key = openai_api_key
     bing_keys = {"Ocp-Apim-Subscription-Key": bing_api_key}
@@ -53,6 +53,7 @@ Search Results:
     return openai_qa_response["choices"][0].text
 
 
+'''
 class ColBERTv2:
     """Wrapper for the ColBERTv2 Retrieval."""
 
