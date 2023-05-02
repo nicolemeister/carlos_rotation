@@ -32,19 +32,25 @@ Search Results:
     openai_qa_response = openai.Completion.create(
         model="text-davinci-003", prompt=qa_prompt, max_tokens=1000, temperature=0.2
     )
-    print(qa_prompt + openai_qa_response["choices"][0].text)
-    return openai_qa_response["choices"][0].text
+
+    retrieved_results = []
+    for result_index, result in enumerate(
+        response.json()["webPages"]["value"][:top_k_search_results], 1
+    ):
+        retrieved_results.append(result['name'] + " | " + result['snippet'])
+
+    return retrieved_results
 
 
-
-def retrieve(query: str, k: int) -> list[str]:
+def retrieve(query: str, openai_api_key: str, bing_api_key: str, k: int) -> list[str]:
     """Retrieves passages from the RM for the query and returns the top k passages."""
-    if not dsp.settings.rm:
-        raise AssertionError("No RM is loaded.")
-    passages = dsp.settings.rm(query, k=k)
-    print('passages1: ', passages)
-    passages = [psg.long_text for psg in passages]
-    print('passages2: ', passages)
+    # if not dsp.settings.rm:
+    #     raise AssertionError("No RM is loaded.")
+    # passages = dsp.settings.rm(query, k=k)
+    # print('passages1: ', passages)
+    # passages = [psg.long_text for psg in passages]
+    # print('passages2: ', passages)
+    passages = answer(query, openai_api_key, bing_api_key, k)
 
     return passages
 

@@ -14,46 +14,6 @@ import requests
 # TODO: Ideally, this takes the name of the index and looks up its port.
 
 
-
-# query = ""
-# bing_api_key = '5fd5ca2ea3b543078fecffce0b5a9b7e'
-# openai_api_key = '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'
-# top_k_search_results=5
-# answer(query, openai_api_key, bing_api_key, top_k_search_results)
-
-'''
-def answer(query, openai_api_key, bing_api_key, top_k_search_results):
-    openai.api_key = openai_api_key
-    bing_keys = {"Ocp-Apim-Subscription-Key": bing_api_key}
-    bing_endpoint = "https://api.bing.microsoft.com/v7.0/search"
-
-    qa_prompt = f"""Write an accurate and concise answer for the given user question, using _only_ the provided summarized web search results. The answer should be correct, high-quality, and written by an expert using an unbiased and journalistic tone. The user's language of choice such as English, Français, Español, Deutsch, or 日本語 should be used. The answer should be informative, interesting, and engaging. The answer's logic and reasoning should be rigorous and defensible. Every sentence in the answer should be _immediately followed_ by an in-line citation to the search result(s). The cited search result(s) should fully support _all_ the information in the sentence. Search results need to be cited using [index]. When citing several search results, use [1][2][3] format rather than [1, 2, 3]. You can use multiple search results to respond comprehensively while avoiding irrelevant search results.
-
-Question: {query}
-
-Search Results:
-"""
-
-    response = requests.get(bing_endpoint, headers=bing_keys, params={"q": query, "mkt": "en-US"})
-    response.raise_for_status()
-    for result_index, result in enumerate(
-        response.json()["webPages"]["value"][:top_k_search_results], 1
-    ):
-        qa_prompt += f"[{result_index}] Original Search Query: {query}\n"
-        qa_prompt += f"[{result_index}] Search Result Title: {result['name']}\n"
-        qa_prompt += f"[{result_index}] Search Result Summary: {result['snippet']}\n"
-        qa_prompt += "\n"
-
-    qa_prompt += "\nAnswer:"
-
-    openai_qa_response = openai.Completion.create(
-        model="text-davinci-003", prompt=qa_prompt, max_tokens=1000, temperature=0.2
-    )
-    print(qa_prompt + openai_qa_response["choices"][0].text)
-    return openai_qa_response["choices"][0].text
-
-
-'''
 class ColBERTv2:
     """Wrapper for the ColBERTv2 Retrieval."""
 
