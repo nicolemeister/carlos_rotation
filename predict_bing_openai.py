@@ -86,7 +86,7 @@ def answer(query, openai_api_key, bing_api_key, top_k_search_results):
 
 
     openai_qa_response = openai.Completion.create(
-        model="text-davinci-003", prompt='Rewrite this question into a search query that captures all the information: '+query, max_tokens=1000, temperature=0.2
+        model="gpt-3.5-turbo", prompt='Rewrite this question into a search query that captures all the information: '+query, max_tokens=1000, temperature=0.2
     )
     rewritten_query = openai_qa_response["choices"][0].text
     
@@ -111,7 +111,7 @@ Search Results:
     qa_prompt += "\nAnswer:"
 
     openai_qa_response = openai.Completion.create(
-        model="text-davinci-003", prompt=qa_prompt, max_tokens=1000, temperature=0.2
+        model="gpt-3.5-turbo", prompt=qa_prompt, max_tokens=1000, temperature=0.2
     )
     print(qa_prompt + openai_qa_response["choices"][0].text)
     return openai_qa_response["choices"][0].text
